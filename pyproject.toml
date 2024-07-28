@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "gptchess"
+version = "0.1.0"
+description = ""
+authors = ["Robert Washbourne <rawashbourne@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+chess = "^1.10.0"
+zstandard = "^0.23.0"
+tiktoken = "^0.7.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
