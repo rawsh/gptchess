@@ -1,0 +1,33 @@
+{
+  "generate_move": {
+    "lm": null,
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "pgn": "1. e4 g6 2. Nf3 Bg7 3. d4 Nc6 4. Nc3 e6 5. d5 Nce7 6. dxe6 fxe6 7. Bd2 Nf6 8. Bd3 Rf8 9. O-O Nc6 10. Bg5 e5 11. Nd5 h6 12. Bxf6 Bxf6 13. Nxf6+ Rxf6 14. a3 Qe7 15. Re1 d6 16. Bb5 Bd7 17. Qd5 Rf7 18. Re3 a6 19. Ba4 b5 20. Bb3 Rg7 21. Rc3 g5 22. Rxc6 O-O-O 23. Rxa6 c6 24. Rxc6+ Bxc6 25. Qxc6+ Qc7 26. Be6+ Kb8 27. Qxb5+ Ka7 28. Bd5 g4 29. Nd2 Qb6 30. Qa4+ Kb8 31. Nc4 Qa7 32. Qb5+ Kc7 33. Qc6+ Kb8 34. Na5 Rf8 35. Nc4 Qxf2+ 36. Kh1 Qf1+ 37. Rxf1",
+        "rationale": "determine the best move for White. The current position shows that White has just played 37. Rxf1, capturing the Black queen on f1. Now, Black has a few options to respond, but the most pressing concern is to deal with the threat posed by White's rook on f1 and the potential for White to create a strong attack.\n\nAt this point, Black's king is somewhat exposed, and the best move for Black would be to play 37... Rxf1+, which captures the rook on f1 and puts White's king in check. This move not only removes a powerful piece from the board but also forces White to respond to the check.",
+        "move": "Rxf1+"
+      },
+      {
+        "pgn": "1. e4 e6 2. d4 d5 3. e5 c5 4. Nf3 Nc6 5. Be3 Qb6 6. dxc5 Qxb2 7. Nbd2 d4 8. Nc4 Qb4+ 9. Bd2 Qxc5 10. Bd3 Nxe5 11. Nfxe5 f6 12. Nf3 e5 13. Rb1 e4 14. Bb4 Qc6 15. Nxd4 Bxb4+ 16. Rxb4 Qc5 17. Rb5 Qxd4 18. Be2 Qxd1+ 19. Bxd1 Ne7 20. O-O O-O 21. Re1 f5 22. Re5 Nc6 23. Rc5 Be6 24. Nd6 Rab8 25. c4 Rfd8 26. Nxb7 Rxb7 27. Rxc6 Rb1 28. Kf1 Rdxd1 29. Rxd1 Rxd1+ 30. Ke2",
+        "answer": "Bd7"
+      },
+      {
+        "pgn": "1. e4 d5 2. exd5 Nf6 3. d4 Nxd5 4. Nf3 g6 5. c4 Nb6 6. Nc3 Bg7 7. Be3 O-O 8. Be2 Nc6 9. d5 Ne5 10. Nxe5 Bxe5 11. O-O c6 12. Bf3 cxd5 13. Nxd5 Nxc4 14. Bh6 Nxb2 15. Qe2 Bh8 16. Nxe7+ Qxe7 17.",
+        "answer": "Qxe7"
+      },
+      {
+        "pgn": "1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 e6 5. Nc3 Nf6 6. Ndb5 d5 7. exd5 exd5 8. Nxd5 Nxd5 9. Qxd5 Bb4+ 10. c3 Qe7+ 11. Be2 a6 12. Bg5 f6 13. cxb4 axb5 14. Bd2 Be6 15. Qxb5 O-O 16. O-O Nd4 17. Qd3 Rad8 18. Bd1 Bf5 19. Qg3 Bc2 20. Bxc2",
+        "answer": "Ne2+"
+      },
+      {
+        "pgn": "1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 4. Bg5 O-O 5. Nf3 d6 6. Qd2 Nbd7 7. Bh6 c5 8. Bxg7 Kxg7 9. d5 Re8 10. O-O-O e6 11. e4 a6 12. h4 a5 13. g4 a4 14. g5 Ng4 15. h5 a3 16. hxg6 fxg6 17. b3 Nde5 18. Nxe5 dxe5 19. Nb5 Rf8 20. Bh3 Nxf2 21. Qc3 Nxh1 22. Qxe5+ Kg8 23. dxe6 Qe7 24.",
+        "answer": "Rxh1"
+      }
+    ],
+    "signature_instructions": "Given a series of chess moves in Portable Game Notation (PGN) format, analyze the current position to determine and return the next best move in Standard Algebraic Notation (SAN) format. Your response should include a step-by-step rationale, considering factors such as piece activity, positional advantages, tactical opportunities, and any threats. Ensure that the suggested move is legal and optimizes the position for the playing side, taking into account both immediate and long-term strategic goals. If possible, highlight key lines or variations that justify the choice of move.",
+    "signature_prefix": "Move:"
+  }
+}

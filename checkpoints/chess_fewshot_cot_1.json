@@ -6,13 +6,13 @@
     "demos": [
       {
         "augmented": true,
-        "pgn": "1. e4 e5 2. Ne2 Bc5 3. Ng3 d6 4. Bc4 h6 5. O-O Nf6 6. d3 O-O 7. Nh5 Bg4 8. Nxf6+ Qxf6 9. ",
+        "pgn": "1. e4 e5 2. Ne2 Bc5 3. Ng3 d6 4. Bc4 h6 5. O-O Nf6 6. d3 O-O 7. Nh5 Bg4 8. Nxf6+ Qxf6 9.",
         "rationale": "Pgn: 1. e4 e5 2. Ne2 Bc5 3. Ng3 d6 4. Bc4 h6 5. O-O Nf6 6. d3 O-O 7. Nh5 Bg4 8. Nxf6+ Qxf6 9.\nReasoning: Let's think step by step in order to determine the best move for White. After 8...Qxf6, Black has captured the knight on f6, and now White needs to respond. The most logical move for White is to play 9. Qxg4, capturing the bishop on g4. This move not only gains material but also puts pressure on Black's position.",
         "move": "Qxg4"
       },
       {
         "augmented": true,
-        "pgn": "1. e4 d5 2. exd5 Qxd5 3. Nc3 Qd8 4. Nf3 Nf6 5. h3 Bf5 6. Bc4 e6 7. d3 Be7 8. Qe2 O-O 9. Bd2 a6 10. g4 Bg6 11. Ne5 b5 12. Bb3 c5 13. h4 h6 14. Nxg6 fxg6 15. g5 Nd5 16. Nxd5 exd5 17. Qe6+ Kh7 18. Bxd5 Bxg5 19. O-O-O Bxd2+ 20. Rxd2 Rf6 21. Qe4 Ra7 22. h5 Re7 23. hxg6+ Kh8 24. Qg2 Qd6 25. Re2 Rxe2 26. Rxh6+ gxh6 27. g7+ Kh7 28. ",
+        "pgn": "1. e4 d5 2. exd5 Qxd5 3. Nc3 Qd8 4. Nf3 Nf6 5. h3 Bf5 6. Bc4 e6 7. d3 Be7 8. Qe2 O-O 9. Bd2 a6 10. g4 Bg6 11. Ne5 b5 12. Bb3 c5 13. h4 h6 14. Nxg6 fxg6 15. g5 Nd5 16. Nxd5 exd5 17. Qe6+ Kh7 18. Bxd5 Bxg5 19. O-O-O Bxd2+ 20. Rxd2 Rf6 21. Qe4 Ra7 22. h5 Re7 23. hxg6+ Kh8 24. Qg2 Qd6 25. Re2 Rxe2 26. Rxh6+ gxh6 27. g7+ Kh7 28.",
         "rationale": "determine the best move for White. The position after 28. is critical as White has a strong initiative and is threatening to deliver checkmate or win material. The last move played by Black was 27...Kh7, which puts the Black king in a precarious position. \n\nWhite has several options to consider, but the most effective move is to play 29. g8=Q+. This move promotes the pawn on g7 to a queen, delivering check to the Black king. The newly promoted queen will also create a significant threat, as it can potentially lead to checkmate on the next move if Black does not respond adequately.",
         "move": "g8=Q+"
       },
@@ -29,7 +29,7 @@
         "answer": "Rd1+"
       }
     ],
-    "signature_instructions": "Given a sequence of chess moves in Portable Game Notation (PGN) format, critically analyze the current board position to determine the next optimal move in Standard Algebraic Notation (SAN) format. Your answer should include a detailed step-by-step reasoning to justify why this move is the best choice, considering the current threats, opportunities for material gain, and positional advantages. Ensure that your rationale explains how your chosen move aligns with an overall strategic plan to improve your position and counter your opponent's threats.",
+    "signature_instructions": "Given the previous moves in a chess game presented in Portable Game Notation (PGN) format, your task is to analyze the current board position, anticipate the best move considering both tactical and strategic elements, and return the correct next move in Standard Algebraic Notation (SAN) format. Make sure to provide detailed reasoning for your choice, explaining the rationale behind considering piece positions, potential threats, and opportunities for advantageous play.",
     "signature_prefix": "Move:"
   }
 }

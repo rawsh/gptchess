@@ -1,0 +1,33 @@
+{
+  "generate_move": {
+    "lm": null,
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "pgn": "1. e4 e5 2. Nf3 Nf6 3. Bc4 Nxe4 4. Bxf7+ Kxf7 5. Nxe5+ Kg8 6. O-O d5 7. d3 Bd6 8. f4 Nf6 9. c3 c6 10. d4 Bf5 11. Nd2 Nbd7 12. Ndf3 Ng4 13. Nxd7 Qxd7 14. Ne5 Nxe5 15. fxe5 Be7 16. Be3 h6 17. Qh5 Be4 18.",
+        "rationale": "determine the best move for White. The current position shows that White has a strong initiative with threats against the Black king. The move 18. Nd2 is a possibility, but it does not create immediate threats. Instead, White can play 18. Qf7+, which puts the Black king in check and forces it to move. This move also threatens to capture the rook on a8 if the king moves to f8.",
+        "move": "Qf7+"
+      },
+      {
+        "pgn": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. Bd3 Nc6 5. c3 Nf6 6. Bf4 Bg4 7. Nf3 Bh5 8. Nbd2 e6 9. O-O Be7 10. Re1 O-O 11. Qc2 Rc8 12. Rac1 Nb4 13. Qb1 Nxd3 14. Qxd3 Bg6 15. Qe2 a6 16. Ne5 b5 17. b4 Nd7 18. Nxg6 hxg6 19. Nf3 Nb6 20. Ne5 Bg5 21. Qg4 Bxf4 22. Qxf4 Rc7 23. Re3 Qf6 24. Qg4 Rfc8 25. Rf3 Qd8 26. Qf4 Qe8 27. Rh3 Qe7 28. Qg4 Na4 29. Nxg6 fxg6 30. Qxg6 Qf6 31. Qh7+ Kf7 32. Rf3 Qxf3 33.",
+        "answer": "gxf3"
+      },
+      {
+        "pgn": "1. e4 e6 2. d4 d5 3. e5 c5 4. c3 Nc6 5. Nf3 Qb6 6. a4 a6 7. Na3 Nge7 8. Nc2 Nf5 9. g4 Nh6 10. g5 Nf5 11. Bh3 Be7 12. Bxf5 exf5 13. h4 Be6 14. Qd3 c4 15. Qe2 Na5 16. h5 Nb3 17. Rb1 Nxc1 18. Rxc1 Qxb2 19. Qd2 b5 20. axb5 axb5 21. Ke2 Ra2 22. Rhd1 O-O 23. Nfe1 Ba3 24.",
+        "answer": "Rb1"
+      },
+      {
+        "pgn": "1. Nf3 d5 2. g3 c6 3. Bg2 Bg4 4. O-O Nd7 5. d3 e5 6. Nbd2 Ngf6 7. c4 d4 8. Rb1 Bd6 9. b4 O-O 10. a3 a5 11. h3 Bh5 12. g4 Bg6 13. Nh4 h6 14. Nxg6 fxg6 15. Qb3 Kh7 16. Bb2 Kh8 17. c5 Bc7 18. Rbe1 Nh7 19. Qe6 Rf6 20. Qc4 axb4 21. axb4 b5 22. Qb3 Ng5 23. e3 Qf8 24. exd4 exd4 25. Bxd4 Nf3+ 26. Nxf3 Rxf3 27. Bxf3 Qf4 28. Bxg7+",
+        "answer": "Kh7"
+      },
+      {
+        "pgn": "1. e4 b6 2. d4 Bb7 3. Nf3 Bxe4 4. Nc3 Bb7 5. d5 Nf6 6. Bg5 e6 7. dxe6 dxe6 8. Qxd8+ Kxd8 9. Bxf6+ gxf6 10. O-O-O+ Kc8 11. Nd4 c5 12. Ndb5 a6 13. Nd6+ Bxd6 14. Rxd6 Kc7 15. Rd1 Nc6 16. Rg1 Rhg8 17. g3 Nd4 18. Bg2 Bxg2 19. Rxg2 Rad8 20. Rd3 Nf5 21. Rxd8 Rxd8 22. Ne4 Nd4 23. Nxf6",
+        "answer": "Ne2+"
+      }
+    ],
+    "signature_instructions": "Given a series of chess moves in Portable Game Notation (PGN) format, your task is to determine and return the optimal next move in Standard Algebraic Notation (SAN) format. Ensure you carefully analyze the current board position, considering both offensive and defensive strategies. Provide a detailed reasoning process for your chosen move, addressing potential threats and opportunities. Your response should include: 1) A step-by-step explanation of your thought process and 2) The final move in SAN format. Aim for accuracy and clarity to facilitate understanding and learning.",
+    "signature_prefix": "Move:"
+  }
+}
