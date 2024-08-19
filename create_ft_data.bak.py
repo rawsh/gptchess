@@ -5,18 +5,16 @@ import argparse
 import tiktoken
 import random
 import requests
-import chess
 
-def extract_clean_pgn(game_url_with_move, game_num_mod=0):
+def extract_clean_pgn(game_url_with_move):
     # Remove '/black' from the URL if present
-    game_url = game_url_with_move.replace('/black', '').replace('/white', '')
+    game_url = game_url_with_move.replace('/black', '')
 
     # Extract game ID and move number from the URL
     url_parts = game_url.split('/')
     game_id = url_parts[3].split('#')[0]
     
     move_number = int(url_parts[3].split('#')[1]) if '#' in url_parts[3] else None
-    print(move_number)
     
     # Fetch game data from Lichess API
     api_url = f"https://lichess.org/game/export/{game_id}"
@@ -34,7 +32,7 @@ def extract_clean_pgn(game_url_with_move, game_num_mod=0):
         move_number = len(moves)
     else:
         # Always include the move specified in the URL
-        move_number = min(move_number + game_num_mod + 1, len(moves))
+        move_number = min(move_number + 1, len(moves))
 
     # Reconstruct the clean PGN up to the specified move
     clean_pgn = ""
@@ -43,46 +41,35 @@ def extract_clean_pgn(game_url_with_move, game_num_mod=0):
             clean_pgn += f"{i//2 + 1}. {moves[i]} "
         else:
             clean_pgn += f"{moves[i]} "
-
-    if move_number % 2 == 0:
-        clean_pgn += f"{move_number//2 + 1}. "
     
     # Trim any trailing space
     clean_pgn = clean_pgn.strip()
     
-    return clean_pgn
+    return clean_pgn, move_number
 
-# def create_jsonl_entry(pgn, correct_response):
-#     return {
-#         "messages": [
-#             {
-#                 "role": "user",
-#                 "content": f"{pgn} "
-#             },
-#             {
-#                 "role": "assistant",
-#                 "content": correct_response
-#             }
-#         ]
-#     }
-
-# def create_jsonl_entry(pgn, correct_response):
-#     return {
-#         "input": pgn,
-#         "output": " " + correct_response
-#     }
-
-def create_jsonl_entry(pgn, correct_response):
+def create_jsonl_entry(pgn, opponent_move, correct_response, rating, player_to_move):
     return {
-        "prompt": pgn,
-        "completion": " " + correct_response
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are a chess engine. Given a chess position in PGN (Portable Game Notation) format, your task is to provide the best move in UCI (Universal Chess Interface) notation."
+            },
+            {
+                "role": "user",
+                "content": f"What is the best move for {player_to_move} in this chess position? PGN:\n{pgn}"
+            },
+            {
+                "role": "assistant",
+                "content": correct_response
+            }
+        ]
     }
 
 def count_tokens(text, model="gpt-4o-mini"):
     encoding = tiktoken.encoding_for_model(model)
     return len(encoding.encode(text))
 
-def convert_puzzles(input_file, train_output, val_output, max_entries=None, min_rating=None, verbose=False, start_index=0):
+def convert_puzzles(input_file, train_output, val_output, html_output=None, max_entries=None, min_rating=None, verbose=False):
     total_tokens_train = 0
     total_tokens_val = 0
     entries_written_train = 0
@@ -98,9 +85,20 @@ def convert_puzzles(input_file, train_output, val_output, max_entries=None, min_
         
         reader = csv.DictReader(zstd_file)
         
-        # Skip rows until start_index
-        for _ in range(start_index):
-            next(reader, None)
+        html_file = open(html_output, 'w') if html_output else None
+        
+        if html_file:
+            html_file.write('''
+            <html>
+            <head>
+                <style>
+                    .puzzle { margin-bottom: 30px; border: 1px solid #ccc; padding: 10px; }
+                    .board { display: inline-block; margin-right: 20px; }
+                    .move { margin-bottom: 10px; }
+                </style>
+            </head>
+            <body>
+            ''')
         
         for row in reader:
             puzzle_rating = int(row['Rating'])
@@ -114,77 +112,70 @@ def convert_puzzles(input_file, train_output, val_output, max_entries=None, min_
 
             puzzle_id = row['PuzzleId']
             game_url = row['GameUrl']
-            fen = row["FEN"]
             moves = row['Moves'].split()
-
-            moves_san = []
-            board = chess.Board(fen)
-            for move_idx in range(len(moves) // 2):
-                opponent_move = moves[0 + move_idx * 2]
-                correct_response = moves[1 + move_idx * 2]
-                moves_san.append(board.san_and_push(chess.Move.from_uci(opponent_move)))
-                moves_san.append(board.san_and_push(chess.Move.from_uci(correct_response)))
-                
+            opponent_move = moves[0]
+            correct_response = moves[1]
+            
+            # Correct player to move calculation
+            player_to_move = 'White' if '#' in game_url and int(game_url.split('#')[1]) % 2 == 1 else 'Black'
+            
             if verbose:
                 print(f"\nProcessing puzzle {puzzles_processed}")
                 print(f"PuzzleId: {puzzle_id}")
                 print(f"Rating: {puzzle_rating}")
                 print(f"GameUrl: {game_url}")
-                print(f"Moves UCI: {moves}")
-                print(f"Moves SAN: {moves_san}")
-
+                print(f"Opponent's Move: {opponent_move}")
+                print(f"Correct Response: {correct_response}")
+                print(f"Player to Move: {player_to_move}")
+            
             # Extract clean PGN up to the puzzle start
-            game_pgn = extract_clean_pgn(game_url, -1)
-
-            for move_idx in range(len(moves) // 2):
-                opponent_move = moves_san[0 + move_idx * 2]
-                correct_response = moves_san[1 + move_idx * 2]
-
-                # Correct player to move calculation
-                player_to_move = 'White' if '#' in game_url and int(game_url.split('#')[1]) % 2 == 1 else 'Black'
-                if verbose:
-                    print(f"Opponent's Move: {opponent_move}")
-                    print(f"Correct Response: {correct_response}")
-                    print(f"Player to Move: {player_to_move}")
-                
-                print(game_url.split('#'))
-                move_num = int(game_url.split('#')[1])
-                mid_mod = f" {str(move_num // 2 + move_idx + 2)}." if move_num % 2 == 1 else ""
-                print(mid_mod)
-                game_pgn = f"{game_pgn} {opponent_move}{mid_mod}"
-                puzzle_pgn = game_pgn
-                if verbose:
-                    print(f"PGN: {puzzle_pgn}")
-
-                end_mod = f" {str(move_num // 2 + move_idx + 2)}." if move_num % 2 == 0 else ""
-                game_pgn = f"{game_pgn} {correct_response}{end_mod}"
-                
-                entry = create_jsonl_entry(puzzle_pgn, correct_response)
-                entry['rating'] = puzzle_rating  # Add rating for sorting purposes
-                # tokens = count_tokens(" ".join([msg["content"] for msg in entry["messages"]]))
-                # tokens = count_tokens(entry["input"] + " " + entry["output"])
-                tokens = count_tokens(entry["prompt"] + " " + entry["completion"])
-                
-                # Decide if this entry goes to train or validation set
-                is_train = random.random() < 0.9
-                
-                if is_train:
-                    train_entries.append(entry)
-                    total_tokens_train += tokens
-                    entries_written_train += 1
-                    total_rating_train += puzzle_rating
-                else:
-                    del entry['rating']  # Remove rating before writing to file
-                    val_file.write(json.dumps(entry) + '\n')
-                    total_tokens_val += tokens
-                    entries_written_val += 1
-                    total_rating_val += puzzle_rating
-                
-                if verbose:
-                    print(f"Writing entry to {'train' if is_train else 'validation'} set")
-                
-            if puzzles_processed % 100 == 0:
+            pgn, half_move_number = extract_clean_pgn(game_url)
+            
+            if verbose:
+                print(f"Extracted PGN: {pgn}")
+            
+            if html_file:
+                html_file.write(f'<div class="puzzle"><h2>Puzzle {puzzles_processed}</h2>')
+                html_file.write(f'<p>PuzzleId: {puzzle_id}</p>')
+                html_file.write(f'<p>Rating: {puzzle_rating}</p>')
+                html_file.write(f'<p>GameUrl: <a href="{game_url}" target="_blank">{game_url}</a></p>')
+                html_file.write(f'<p>Opponent\'s Move: {opponent_move}</p>')
+                html_file.write(f'<p>Correct Response: {correct_response}</p>')
+                html_file.write(f'<p>Player to Move: {player_to_move}</p>')
+                html_file.write(f'<p>PGN:<br><pre>{pgn}</pre></p>')
+            
+            entry = create_jsonl_entry(pgn, opponent_move, correct_response, puzzle_rating, player_to_move)
+            entry['rating'] = puzzle_rating  # Add rating for sorting purposes
+            json_string = json.dumps(entry)
+            tokens = count_tokens(json_string)
+            
+            # Decide if this entry goes to train or validation set
+            is_train = random.random() < 0.9
+            
+            if is_train:
+                train_entries.append(entry)
+                total_tokens_train += tokens
+                entries_written_train += 1
+                total_rating_train += puzzle_rating
+            else:
+                del entry['rating']  # Remove rating before writing to file
+                val_file.write(json.dumps(entry) + '\n')
+                total_tokens_val += tokens
+                entries_written_val += 1
+                total_rating_val += puzzle_rating
+            
+            if verbose:
+                print(f"Writing entry to {'train' if is_train else 'validation'} set")
+            
+            if html_file:
+                html_file.write('</div>')
+            
+            if puzzles_processed % 1000 == 0:
                 print(f"Processed {puzzles_processed} puzzles")
+
+        if html_file:
+            html_file.write('</body></html>')
+            html_file.close()
 
     # Sort train entries by rating and write to file
     train_entries.sort(key=lambda x: x['rating'])
@@ -213,12 +204,15 @@ if __name__ == "__main__":
     parser.add_argument("--input_file", default="lichess_db_puzzle.csv.zst", help="Input file path (default: lichess_db_puzzle.csv.zst)")
     parser.add_argument("--train_output", default="chess_finetuning_train.jsonl", help="Output JSONL file path for training set (default: chess_finetuning_train.jsonl)")
     parser.add_argument("--val_output", default="chess_finetuning_val.jsonl", help="Output JSONL file path for validation set (default: chess_finetuning_val.jsonl)")
+    parser.add_argument("--html_output", default="chess_puzzles_visualization.html", help="Output HTML file path for visualization (default: chess_puzzles_visualization.html)")
     parser.add_argument("--max_entries", type=int, default=10, help="Maximum number of puzzles to process (default: 10, use 0 for all puzzles)")
     parser.add_argument("--min_rating", type=int, help="Minimum puzzle rating to include (default: None)")
+    parser.add_argument("--no_html", action="store_true", help="Disable HTML visualization generation")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose logging of each example")
-    parser.add_argument("--start_index", type=int, default=0, help="Start processing from this index in the CSV file (default: 0)")
     
     args = parser.parse_args()
+
+    html_output = None if args.no_html else args.html_output
     max_entries = None if args.max_entries == 0 else args.max_entries
 
-    convert_puzzles(args.input_file, args.train_output, args.val_output, max_entries, args.min_rating, args.verbose, args.start_index)
+    convert_puzzles(args.input_file, args.train_output, args.val_output, html_output, max_entries, args.min_rating, args.verbose)

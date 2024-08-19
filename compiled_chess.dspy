@@ -1,0 +1,21 @@
+{
+  "generate_move": {
+    "lm": null,
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "pgn": "1. e4 d5 2. exd5 Qxd5 3. Nc3 Qe6+ 4. Qe2 Qxe2+ 5. Bxe2 Nf6 6. Nf3 Bg4 7. d4 Nc6 8. O-O O-O-O 9. Ne5 Nxe5 10. dxe5 Bxe2 11. Nxe2 Ng4 12. e6 fxe6 13. h3 Nf6 14. Bf4 g6 15. Rad1 Rxd1 16. Rxd1 Bg7 17. Nd4 Rd8 18. Rd2 Ne4 19. Nxe6 Rxd2 20. Bxd2 Bxb2 21. Bb4 Kd7 22. Nf8+ Kc6 23. Nxh7 Bc3 24. Bxc3 Nxc3 25. Nf8 g5 26. Ne6 Nxa2 27. Nxg5 a5 28. h4 a4 29. h5 Nb4 30. h6 a3 31. h7 a2 32. ",
+        "rationale": "produce the move. We see that the position is quite complex, but the last move played was 32. ... a2. This means that Black is threatening to promote the pawn on a2. White needs to respond to this threat. The best move for White is to play 33. h8=Q, promoting the pawn on h7 to a queen and simultaneously threatening the Black king. This move not only addresses the immediate threat but also creates a powerful new piece on the board.",
+        "move": "h8=Q"
+      },
+      {
+        "pgn": "1. e4 e6 2. d4 d6 3. Nf3 Nd7 4. Bc4 Be7 5. O-O a6 6. c3 b5 7. Bb3 c5 8. d5 e5 9. Re1 Ngf6 10. c4 b4 11. Ba4 a5 12. Bxd7+ Bxd7 13. a3 O-O 14. axb4 axb4 15. Rxa8 Qxa8 16. h3 h6 17. Nbd2 Nh7 18. Nf1 f5 19. N1h2 f4 20. b3 Qe8 21. Bb2 Qg6 22. Kf1 Ng5 23. Nxg5 hxg5 24. Qa1 g4 25. hxg4 Bxg4 26. Nxg4 Qxg4 27. Qd1 Qxd1 28. Rxd1 f3 29. g3 g5 30. Ra1 g4 31. Ra7 Bg5 32. Ke1 Rf7 33. Rxf7 Kxf7 34. Kd1 Kg6 35. Bc1 Bf6 36. Be3 Kh5 37. Kc2 Bh4 38. gxh4 Kxh4 39. Bxc5 dxc5 40.",
+        "answer": " d6"
+      }
+    ],
+    "signature_instructions": "Given the provided dataset, program code, and task demos, we need to construct a highly informative instruction that ensures the Language Model can efficiently solve the task related to determining the correct next chess move in SAN format from a given PGN position. Here\u2019s a detailed and descriptive instruction:\n\n---\n\n**Instruction:**\n\nGiven a series of chess moves in Portable Game Notation (PGN) format, your task is to determine and return the correct next move in Standard Algebraic Notation (SAN) format. To do this, follow these steps:\n\n1. **Comprehend the Current Position:** Analyze the series of moves provided to you in PGN format to understand the current state of the board. Consider the positions of all pieces and any threats or advantageous",
+    "signature_prefix": "Move:"
+  }
+}

@@ -10,6 +10,9 @@ python = "^3.10"
 chess = "^1.10.0"
 zstandard = "^0.23.0"
 tiktoken = "^0.7.0"
+openai = "^1.37.1"
+dspy-ai = "^2.4.13"
+python-dotenv = "^1.0.1"
 
 
 [build-system]
