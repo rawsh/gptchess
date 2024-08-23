@@ -8,11 +8,14 @@ from dotenv import load_dotenv
 load_dotenv()
     
 # use strong model
-task_model = dspy.OpenAI(model="gpt-4o", max_tokens=4000)
+# task_model = dspy.OpenAI(model="gpt-4o", max_tokens=4000)
+task_model = dspy.OpenAI(model="ft:gpt-4o-2024-08-06:devpy:puzzlegod-100ex:9zKwkawo", max_tokens=4000)
+# task_model = dspy.OpenAI(model="ft:gpt-4o-mini-2024-07-18:devpy:puzzlegod-100ex:9zKtUCDG", max_tokens=4000)
 dspy.settings.configure(lm=task_model)
 
 # load data
-train_data = load_example_data("chess_finetuning_train.jsonl")
+train_data = load_example_data("chess_finetuning_train_sample.jsonl")
+# train_data = load_example_data("chess_finetuning_train.jsonl")
 val_data = load_example_data("chess_finetuning_val.jsonl")
 train = [dspy.Example(pgn=ex["prompt"].strip(), answer=ex["completion"].strip()).with_inputs("pgn") for ex in train_data]
 val = [dspy.Example(pgn=ex["prompt"].strip(), answer=ex["completion"].strip()).with_inputs("pgn") for ex in val_data]
