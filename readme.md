@@ -1,3 +1,8 @@
+`python create_ft_data.py --max_entries 1000 --start_index 10000`
+
+
+
+
 top 5 from compiling:
 
 ```
