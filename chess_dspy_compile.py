@@ -8,7 +8,7 @@ import json
 from dotenv import load_dotenv
 load_dotenv()
     
-# task_model = dspy.OpenAI(model="gpt-4o-mini", max_tokens=4000)
+task_model = dspy.OpenAI(model="gpt-4o-mini", max_tokens=4000)
 # task_model = dspy.OpenAI(model="gpt-4o", max_tokens=4000)
 
 # finetune all
@@ -27,7 +27,7 @@ load_dotenv()
 # task_model = dspy.OpenAI(model="ft:gpt-4o-2024-08-06:devpy:chess-all:9zJ5Y9y8", max_tokens=4000)
 
 # finetune all (new 100 sample) gpt4o
-task_model = dspy.OpenAI(model="ft:gpt-4o-2024-08-06:devpy:puzzlegod-100ex:9zKwkawo", max_tokens=4000)
+# task_model = dspy.OpenAI(model="ft:gpt-4o-2024-08-06:devpy:puzzlegod-100ex:9zKwkawo", max_tokens=4000)
 
 # task_model = dspy.OpenAI(
 #     model="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
@@ -112,9 +112,9 @@ evaluate = Evaluate(devset=val, metric=metric, **kwargs)
 # compiled_program.save("compiled_chess_cot_ft_student.dspy")
 
 compiled_program = ChessEngine().activate_assertions()
-compiled_program.load("compiled_chess_cot_ft_student.dspy")
+# compiled_program.load("compiled_chess_cot_ft_student.dspy")
 # compiled_program = ChessEngine()
-# compiled_program.load("compiled_chess_cot.dspy")
+compiled_program.load("compiled_chess_cot.dspy")
 
 # trained
 # import random

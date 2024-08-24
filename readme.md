@@ -1,6 +1,25 @@
-`python create_ft_data.py --max_entries 1000 --start_index 10000`
+`python create_ft_data.py --max_entries 1000 --start_index 10000 `
+
+![accuracy comparison scatter](model_accuracy.png)
 
 
+| Model | Accuracy |
+|-------|----------|
+| gpt-4o-mini [zero shot] | 17.4% |
+| gpt-4o-mini | 25.99% |
+| gpt-4o-mini [SELF CORRECT 2 tries max] | 31.72% |
+| **ft:gpt-4o-mini-2024-07-18:devpy:puzzlegod-100ex:9zKtUCDG** | 57.71% |
+| **ft:gpt-4o-mini-2024-07-18:devpy:puzzlegod-it1-129ex:9zLUVZ9j** [finetuned gpt-4o as teacher] | 54.19% |
+| **ft:gpt-4o-mini-2024-07-18:devpy:puzzlegod-100ex:9zKtUCDG** [SELF CORRECT 2 tries max] | 65.64% |
+| gpt-4o [zero shot] | 28.44 |
+| gpt-4o | 55.07% |
+| gpt-4o [SELF CORRECT 2 tries max] | 63.88% |
+| **ft:gpt-4o-2024-08-06:devpy:puzzlegod-100ex:9zKwkawo** | 58.59% |
+| **ft:gpt-4o-2024-08-06:devpy:puzzlegod-100ex:9zKwkawo** [SELF CORRECT 2 tries max] | 71.37% |
+|  |  |
+| babbage-002 | 61.23% |
+| davinci-002 | 74.45% |
+| ft:davinci-002:devpy:davinci-chess-pgn:9rGcgkI9 | 76.21% |
 
 
 top 5 from compiling:
